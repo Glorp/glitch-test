@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stuff</title>
+    <script src="./require.js" defer></script>
+    <script src="./parse.js" defer></script>
+    <script src="./renderHtml.js" defer></script>
+    <script src="./edit.js" defer></script>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/editor.css" />
+  </head>
+  <body>
+    <div>
+      Notes:
+      <input id="notes-filter" type="text" placeholder="filename"><button id="new-note">+</button><button id="refresh">⟳</button>
+      <ul id="notes" class="notes-list">
+      </ul>
+    </div>
+    <div id="editors" class="editors">
+    </div>
+  </body>
+</html>

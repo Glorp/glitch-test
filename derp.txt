@@ -1,0 +1,110 @@
+  const token2 = (str) => {
+    
+    const h3m = str.match(/^###([ \t]*)(.*?)([ \t]*)$/);
+    if (h3m !== null) {
+      return h3(strws("###", h3m[1]), strws(h3m[2], h3m[3]));
+    }
+    const h2m = str.match(/^##([ \t]*)(.*?)([ \t]*)$/);
+    if (h2m !== null) {
+      return h2(strws("###", h2m[1]), strws(h2m[2], h2m[3]));
+    }
+    const h1m = str.match(/^#([ \t]*)(.*?)([ \t]*)$/);
+    if (h1m !== null) {
+      return h1(strws("###", h1m[1]), strws(h1m[2], h1m[3]));
+    }
+    const qm = str.match(/^>([ \t]*)(.*?)([ \t]*)$/);
+    if (qm !== null) {
+      return quote(strws(">", qm[1]), strws(qm[2], qm[3]));
+    }
+    const lm = str.match(/^=>([ \t]*)([^ \t]*)([ \t]*)([^ \t]*)([ \t]*)(.*?)([ \t]*)$/);
+    if (lm !== null) {
+      if (lm[4] === "") {
+        return error(str, "missing link");
+      }
+      return link(strws("=>", lm[1]), strws(lm[2], lm[3]), strws(lm[4], lm[5]), strws(lm[6], lm[7]));
+    }
+    const ilm = str.match(
+      /^<=([ \t]*)([^ \t]*)([ \t]*)([^ \t]*)([ \t]*)(.*?)([ \t]*)$/
+    );
+    if (ilm !== null) {
+      if (ilm[4] === "") {
+        return error(str, "missing link");
+      }
+      return inlink(
+        strws("<=", ilm[1]),
+        strws(ilm[2], ilm[3]),
+        strws(ilm[4], ilm[5]),
+        strws(ilm[6], ilm[7])
+      );
+    }
+    const lim = str.match(/^[*]([ \t]*)(.*?)([ \t]*)$/);
+    if (lim !== null) {
+      return li(strws("*", lim[1]), strws(lim[2], lim[3]));
+    }
+    const hrm = str.match(/^----([ \t]*)(.*?)([ \t]*)$/);
+    if (hrm !== null) {
+      return hr(strws("----", hrm[1]), strws(hrm[2], hrm[3]));
+    }
+
+    const kvm = str.match(/^:([ \t]*)([^ \t]*)([ \t]+)(.*?)([ \t]*)$/);
+    if (kvm !== null) {
+      return keyval(
+        strws(":", kvm[1]),
+        strws(kvm[2], kvm[3]),
+        strws(kvm[4], kvm[5])
+      );
+    }
+
+    const km = str.match(/^:([ \t]*)([^ \t]*)$/);
+    if (km !== null) {
+      return keyval(strws(":", km[1]), strws(km[2], ""), strws("", ""));
+    }
+
+    const tm = str.match(/^[|]([ \t]*)(.*?)([ \t]*)$/);
+    if (tm !== null) {
+      return text(strws("|", tm[1]), strws(tm[2], tm[3]));
+    }
+
+    return textToken(str);
+  };
+  
+  
+  
+  
+  
+const h1 = (start, title) => ({ tag: "h1", start: start, title: title });
+const h2 = (start, title) => ({ tag: "h2", start: start, title: title });
+const h3 = (start, title) => ({ tag: "h3", start: start, title: title });
+const hr = (start, rest) => ({ tag: "hr", start: start, rest: rest });
+const keyval = (start, key, value) => ({
+  tag: "keyval",
+  start: start,
+  key: key,
+  value: value,
+});
+const error = (content, description) => ({
+  tag: "error",
+  content: content,
+  description: description,
+});
+const text = (start, text) => ({ tag: "text", start: start, text: text });
+const quote = (start, text) => ({ tag: "quote", start: start, text: text });
+const link = (start, url, description) => ({
+  tag: "link",
+  start: start,
+  url: url,
+  description: description,
+});
+const inlink = (start, type, url, description) => ({
+  tag: "inlink",
+  start: start,
+  type: type,
+  url: url,
+  description: description,
+});
+const li = (start, text) => ({ tag: "li", start: start, text: text });
+const toggle = (start, alt) => ({ tag: "toggle", start: start, alt: alt });
+
+  
+  
+  

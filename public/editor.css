@@ -1,0 +1,73 @@
+:root {
+  --editor-bg-color: #f8f8f8;
+  --editor-border-color: #333333;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.editors {
+  flex: 1;
+}
+
+button.note-link {
+  width: 100%;
+  text-align: left;
+}
+ul.notes-list {
+  list-style-type: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.gd-link {
+  cursor: pointer;
+}
+
+textarea.editor {
+  white-space: break-spaces;
+  background-color: var(--editor-bg-color);
+  border-style: solid;
+  border-color: var(--editor-border-color);
+  border-width: 1px;
+  width: 30rem;
+
+  height: 15rem;
+  resize: both;
+  overflow: auto;
+}
+
+input.editor {
+  resize: horizontal;
+  overflow: auto;
+}
+
+.editor-and-preview {
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar-button {
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+.half-item {
+  flex: 0 0 50%;
+}
+
+pre, code {
+  font-family: monospace;
+  white-space: pre;
+}
